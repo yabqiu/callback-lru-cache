@@ -3,14 +3,14 @@ from collections import OrderedDict
 from threading import RLock
 
 
-def lru_cache(maxsize, evict_callback=None):
+def lru_cache(maxsize, evict_callback=None, key_generator=None):
     def decorator(func):
         cache = OrderedDict()
         lock = RLock()
 
         @wraps(func)
         def wrapper(*args, **kwargs):
-            cache_key = hash(*args, **kwargs)
+            cache_key = hash(*args, **kwargs) if key_generator is None else key_generator(*args, **kwargs)
             with lock:
                 if cache_key in cache:
                     val = cache.pop(cache_key)
