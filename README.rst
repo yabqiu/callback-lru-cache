@@ -59,6 +59,7 @@ is `callback(key, value)`.
         print()
 
 *Output:*
+
 .. code-block::
 
     get data for 1: miss: 1,
